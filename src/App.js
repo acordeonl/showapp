@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import logo from './logo.svg';
 import { AppBar } from "./components/AppBar";
 import ComboBox from './components/ComboBox' ; 
+import { ShowAppSearch } from "./components/ShowAppSearch/ShowAppSearch";
 
 const s = {
     filters:{
@@ -25,9 +26,13 @@ class App extends Component {
     yearFilter(yearFilter){
         this.setState({yearFilter}) ;
     }
+    handleSubmitSearch(query){
+        console.log(query);
+    }
     render() {
         return (<div>
             <AppBar/>
+            <ShowAppSearch onSubmit={this.handleSubmitSearch.bind(this)}/>
             <div style={s.filters}>
                 <div style={{marginLeft:'42px'}}>
                     <ComboBox disabled={this.state.yearFilterDisabled} title='Year' width='120' height='30' 

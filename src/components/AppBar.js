@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { AppTabs } from "./AppTabs";
+import { AppTabs } from "./AppTabs/AppTabs";
 
 const s = {
     wrapper:{
@@ -32,7 +32,7 @@ class AppBar extends Component {
     }
     render() {
         return ( <div style={s.wrapper}>
-            <img draggable="false"  style={s.logo} height='27px' width='165px' src='img/group-2.svg' />
+            <img style={s.logo} height='27px' width='165px' src='img/group-2.svg' />
             <div style={s.tabs}>
                 <AppTabs value={this.state.selectedTab} 
                     onChange={this.handleTabAction.bind(this)} 

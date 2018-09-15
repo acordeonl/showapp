@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { ComboMenu } from './ComboMenu'
+import { ComboMenu } from './ComboMenu/ComboMenu'
 
 const s = {
     title: {
