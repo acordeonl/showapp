@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
-import ComboBox from './components/ComboBox'
+import { AppBar } from "./components/AppBar";
+import ComboBox from './components/ComboBox' ; 
 
 const s = {
     filters:{
@@ -26,6 +27,7 @@ class App extends Component {
     }
     render() {
         return (<div>
+            <AppBar/>
             <div style={s.filters}>
                 <div style={{marginLeft:'42px'}}>
                     <ComboBox disabled={this.state.yearFilterDisabled} title='Year' width='120' height='30' 
