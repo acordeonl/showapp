@@ -1,0 +1,25 @@
+.combo_box_menu_listItem:hover{
+    background-color: #e8eef1 ;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #a8acad; 
+    border-radius:6px ;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #7f8a8d; 
+    border-radius:5px ;
+}
