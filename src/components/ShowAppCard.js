@@ -95,7 +95,7 @@ class ShowAppCard extends Component {
     render() {
         return ( <div style={s.wrapper}>
             <div style={s.layout}>
-                <img widht='136px' height='204px' style={s.image} src='/img/demo.png'/>
+                <img widht='136px' height='204px' style={s.image} src={this.props.poster_url}/>
                 <div style={s.info}>
                     <div style={s.header}>
                         <div style={s.title}>

@@ -81,7 +81,8 @@ class ShowAppList extends Component {
         let release = release_date ; 
         if(releaseCountry.length > 0)
             release = `${release_date} (${releaseCountry})`  ; 
-        return {vote_average,runtime,genres,title,id,overview,poster_path,release,videoUrl} ; 
+        let poster_url = 'https://image.tmdb.org/t/p/w500'+poster_path;
+        return {vote_average,runtime,genres,title,id,overview,poster_url,release,videoUrl} ; 
     }
     async fetchData(tab,query,genreFilter,yearFilter){
         var sleep = n => new Promise(resolve => setTimeout(resolve, n));
