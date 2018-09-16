@@ -90,7 +90,7 @@ class ShowAppList extends Component {
             if(releaseCountry.length > 0)
                 release = `${release_date} (${releaseCountry})`  ; 
             let poster_url = 'https://image.tmdb.org/t/p/w500'+poster_path;
-            return {vote_average,runtime,genres,title,id,overview,poster_url,release,videoUrl} ; 
+            return {type:'movie',vote_average,runtime,genres,title,id,overview,poster_url,release,videoUrl} ; 
         }
         else{
             let {vote_average,episode_run_time,genres,name,id,first_air_date,overview,poster_path,origin_country} = response[0] ; 
@@ -101,7 +101,7 @@ class ShowAppList extends Component {
             if(releaseCountry.length > 0)
                 release = `${first_air_date} (${releaseCountry})`  ; 
             let poster_url = 'https://image.tmdb.org/t/p/w500'+poster_path;
-            return {vote_average,runtime,genres,title:name,id,overview,poster_url,release,videoUrl} ; 
+            return {type:'tv',vote_average,runtime,genres,title:name,id,overview,poster_url,release,videoUrl} ; 
         }
     }
     async fetchData(tab,query,genreFilter,yearFilter){

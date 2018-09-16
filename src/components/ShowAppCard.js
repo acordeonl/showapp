@@ -98,8 +98,13 @@ class ShowAppCard extends Component {
             if(favorites[i].title === this.props.title)
                 return ; 
         }
-        favorites.push({...this.props}) ; 
+        favorites.push({...this.props,type:'favorite'}) ; 
         localStorage.setItem('favorites',JSON.stringify(favorites)) ; 
+    }
+    style_addToFavorites(){
+        if(this.props.type === 'favorite')
+            return {...s.addToFavorites,display:'none'}
+        return {...s.addToFavorites} ; 
     }
     render() {
         return ( <div style={s.wrapper}>
@@ -136,7 +141,7 @@ class ShowAppCard extends Component {
                                 Ver Trailer
                             </div>
                         </div>
-                        <div style={s.addToFavorites}>
+                        <div style={this.style_addToFavorites()}>
                             Agregar a favoritos
                             &nbsp;
                             <img onClick={this.addToFavorites.bind(this)}  style={s.icon} height='17.5px' width='17.5px' src='/img/favorite.svg' />
