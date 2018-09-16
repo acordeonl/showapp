@@ -108,6 +108,9 @@ class ShowAppCard extends Component {
             return {...s.addToFavorites,display:'none'}
         return {...s.addToFavorites} ; 
     }
+    openTrailer() {
+        this.props.onViewTrailer(this.props.videoUrl) ; 
+    }
     render() {
         return ( <div style={s.wrapper}>
             <div style={s.layout}>
@@ -138,7 +141,7 @@ class ShowAppCard extends Component {
                         {this.limitText(this.props.overview,130)}
                     </div>
                     <div style={s.buttons}>
-                        <div style={s.watchTrailerButton}>
+                        <div style={s.watchTrailerButton} onClick={this.openTrailer.bind(this)}>
                             <div >
                                 Ver Trailer
                             </div>

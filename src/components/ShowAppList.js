@@ -35,8 +35,9 @@ class ShowAppList extends Component {
         this.entity = 'movie' ;
         this.loadedAll = false ; 
         this.state = {
+            videoSrc:'',
             loadingMore:true,
-            modalOpen:true 
+            modalOpen:false 
         }
         document.addEventListener('scroll', this.trackScrolling);
         window.addEventListener('resize', this.windowResize);
@@ -155,14 +156,17 @@ class ShowAppList extends Component {
         
     }
     handleCloseModal() {
-        this.setState({modalOpen:false}) ;
+        this.setState({modalOpen:false,videoSrc:''}) ;
+    }
+    onViewTrailer(videoSrc){
+        this.setState({modalOpen:true,videoSrc}) ;
     }
     render() {
         if(this.props.updated) {
             const data = this.movies.map((movie,index) => {
                 return (
                     <div key={index} style={s.card}>
-                        <ShowAppCard onPlayTrailer={this.playTrailer.bind(this)} {...movie} />
+                        <ShowAppCard onViewTrailer={this.onViewTrailer.bind(this)} onPlayTrailer={this.playTrailer.bind(this)} {...movie} />
                     </div>
                 ) ;
             });
@@ -179,7 +183,7 @@ class ShowAppList extends Component {
                                 onClose={this.handleCloseModal.bind(this)}
                                 width='500' 
                                 height='300' 
-                                src='https://www.youtube.com/embed/VQ1nRvsjc_A'/>
+                                src={this.state.videoSrc}/>
                         </div>
                         {data}
                     </div>);
