@@ -50,6 +50,7 @@ class App extends Component {
             genreFilter:'',
             yearFilter:'',
             query:'',
+            inMobile:false,
             updated:false,
             yearFilterDisabled:false,
             genreFilterDisabled:false
