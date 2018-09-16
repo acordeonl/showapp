@@ -32,6 +32,24 @@ const s = {
 class ShowAppSearch extends Component {
     constructor(props) {
         super(props) ; 
+        this.state = {
+            inMobile:false
+        } ; 
+    }
+    componentDidMount(){
+        let mq_medium = matchMedia('(min-width:550px)') ; 
+        mq_medium.addListener(this.changeSize.bind(this)) ; 
+        this.changeSize(mq_medium) ; 
+    }
+    changeSize(mql) {
+        if(mql.matches){
+            this.setState({inMobile:false}) ;
+            // document.body.style.backgroundColor = 'red' ; 
+        }
+        else{
+            this.setState({inMobile:true}) ;
+            // document.body.style.backgroundColor = 'blue' ; 
+        }
     }
     submit() {  
         this.props.onSubmit(this.props.value) ;
@@ -43,10 +61,21 @@ class ShowAppSearch extends Component {
         if(event.keyCode === 13)
             this.submit() ; 
     }   
+    // --------------- styles ----------------------
+    style_input(){
+        if(this.state.inMobile)
+            return {...s.input,width:'80%'}
+        return {...s.input} ; 
+    }
+    style_icon(){
+        if(this.state.inMobile)
+            return {...s.icon,marginLeft:'25px',marginRight:'20px'} ; 
+        return {...s.icon} ; 
+    }
     render() {
         return ( <div style={s.wrapper}>
-            <img onClick={this.submit.bind(this)} style={s.icon} height='17.5px' width='17.5px' src='img/search.svg' />
-            <input value={this.props.value} onChange={this.handleInputChange.bind(this)} onKeyDown={this.handleKeyDown.bind(this)} className='show_app_search_bar' style={s.input} type='text' placeholder='Search for a movie, series and videos'/>
+            <img style={this.style_icon()} onClick={this.submit.bind(this)}  height='17.5px' width='17.5px' src='img/search.svg' />
+            <input  style={this.style_input()}  value={this.props.value} onChange={this.handleInputChange.bind(this)} onKeyDown={this.handleKeyDown.bind(this)} className='show_app_search_bar' type='text' placeholder='Search for a movie, series and videos'/>
             <div style={s.text}>  </div>
         </div>);
     }

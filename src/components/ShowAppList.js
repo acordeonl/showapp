@@ -44,6 +44,16 @@ class ShowAppList extends Component {
             toastMessage:'',
             addingToFavorites:false
         }
+
+        // const mediumBp = matchMedia('(min-width:600px)') ; 
+        // const changeSize = mql => {
+        //     mql.matches ? 
+        //         document.body.style.background = 'red' :
+        //           document.body.style.background = 'yellow' ;
+        // }
+        // mediumBp.addListener(changeSize) ; 
+        // changeSize(mediumBp) ; 
+
         document.addEventListener('scroll', this.trackScrolling);
         window.addEventListener('resize', this.windowResize);
     }
