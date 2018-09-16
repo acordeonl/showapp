@@ -6,6 +6,16 @@ import { ShowAppSearch } from "./components/ShowAppSearch/ShowAppSearch";
 import { ShowAppList } from "./components/ShowAppList/ShowAppList";
 
 const s = {
+    body:{
+        width:'100%',
+        display:'flex',
+        alignItems:'center',
+        flexDirection:'column',
+        justifyContent:'center'
+    },
+    app_wrapper:{
+        width:'1024px'
+    },
     filters:{
         display:'flex',
         flexDirection:'row'
@@ -66,38 +76,40 @@ class App extends Component {
         })
     }
     render() {
-        return (<div>
-            <AppBar onChange={this.handleTabSelect.bind(this)}/>
-            <ShowAppSearch onSubmit={this.handleSubmitSearch.bind(this)}/>
-            <div style={s.header}>
-                <div style={s.headerContent}>
-                    Descubra nuevas películas y programas de televisión
+        return (<div style={s.body}>
+            <div style={s.app_wrapper}>
+                <AppBar onChange={this.handleTabSelect.bind(this)}/>
+                <ShowAppSearch onSubmit={this.handleSubmitSearch.bind(this)}/>
+                <div style={s.header}>
+                    <div style={s.headerContent}>
+                        Descubra nuevas películas y programas de televisión
+                    </div>
                 </div>
-            </div>
-            <div style={s.filters}>
-                <div style={{marginLeft:'42px'}}>
-                    <ComboBox disabled={this.state.yearFilterDisabled} title='Year' width='120' height='30' 
-                    onChange={this.handleYearFilter.bind(this)} 
-                    menu={['2016', '2002', '2006']} />
+                <div style={s.filters}>
+                    <div style={{marginLeft:'42px'}}>
+                        <ComboBox disabled={this.state.yearFilterDisabled} title='Year' width='120' height='30' 
+                        onChange={this.handleYearFilter.bind(this)} 
+                        menu={['2016', '2002', '2006']} />
+                    </div>
+                    <div style={{marginLeft:'69px'}}>
+                        <ComboBox style={{marginLeft:'14px'}} title='Genre' width='238' height='30' 
+                            onChange={this.handleGenreFilter.bind(this)} 
+                            menu={[
+                                'Acción',
+                                'Aventura', 
+                                'Comedia',
+                            ]} />
+                    </div>
                 </div>
-                <div style={{marginLeft:'69px'}}>
-                    <ComboBox style={{marginLeft:'14px'}} title='Genre' width='238' height='30' 
-                        onChange={this.handleGenreFilter.bind(this)} 
-                        menu={[
-                            'Acción',
-                            'Aventura', 
-                            'Comedia',
-                        ]} />
+                <div style={s.listWrapper}>
+                    <ShowAppList 
+                        onUpdate={this.handleUpdate.bind(this)}
+                        updated={this.state.updated}
+                        tab={this.state.tab}
+                        genreFilter={this.state.genreFilter}
+                        yearFilter={this.state.yearFilter}
+                        query={this.state.query}/>
                 </div>
-            </div>
-            <div style={s.listWrapper}>
-                <ShowAppList 
-                    onUpdate={this.handleUpdate.bind(this)}
-                    updated={this.state.updated}
-                    tab={this.state.tab}
-                    genreFilter={this.state.genreFilter}
-                    yearFilter={this.state.yearFilter}
-                    query={this.state.query}/>
             </div>
         </div>);
     }
