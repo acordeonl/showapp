@@ -179,7 +179,12 @@ class ShowAppCard extends Component {
                 <div style={this.style_info()}>
                     <div style={s.header}>
                         <div style={s.title}>
-                            {this.limitText(this.props.title,32)}
+                            <div style={{display:this.state.inMobile?'block':'none'}}>
+                                {this.limitText(this.props.title,24)}
+                            </div>
+                            <div style={{display:this.state.inMobile?'none':'block'}}>
+                                {this.limitText(this.props.title,32)}
+                            </div>
                         </div>
                         <div style={s.score}>
                             {this.props.vote_average}    
