@@ -20,6 +20,7 @@ const s = {
         borderRadius: '2px',
         boxShadow: '0 2px 4px 0 rgba(130, 130, 130, 0.5)',
         maxHeight:'300px',
+        zIndex:'200',
         overflowY:'scroll',
     }
 }
