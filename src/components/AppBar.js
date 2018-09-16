@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { AppTabs } from "./AppTabs/AppTabs";
+import { AppTabs } from "./AppTabs";
 
 const s = {
     wrapper:{

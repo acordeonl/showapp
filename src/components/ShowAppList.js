@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import { ShowAppCard } from "../ShowAppCard";
-import './ShowAppList.css'
+import { ShowAppCard } from "./ShowAppCard";
 
 const s = {
     wrapper:{
@@ -42,7 +41,7 @@ class ShowAppList extends Component {
     }
 
     windowResize = (evt) => {
-        console.log(evt);
+        // console.log(evt);
     }
     trackScrolling = (evt) => {
         if( (window.innerHeight + window.scrollY) >= document.body.offsetHeight-400 && !this.state.loadingMore)  {

@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 // import logo from './logo.svg';
 import { AppBar } from "./components/AppBar";
 import ComboBox from './components/ComboBox' ; 
-import { ShowAppSearch } from "./components/ShowAppSearch/ShowAppSearch";
-import { ShowAppList } from "./components/ShowAppList/ShowAppList";
+import { ShowAppSearch } from "./components/ShowAppSearch";
+import { ShowAppList } from "./components/ShowAppList";
+import { AppModal } from "./components/AppModal";
+import './App.css' ;
 
 const s = {
     body:{
@@ -194,6 +196,7 @@ class App extends Component {
     render() {
         return (<div style={s.body}>
             <div style={s.app_wrapper}>
+                <AppModal />
                 <AppBar onChange={this.handleTabSelect.bind(this)}/>
                 <ShowAppSearch onUpdateSearchInput={this.handleSearchInputChange.bind(this)} value={this.state.query} onSubmit={this.handleSubmitSearch.bind(this)}/>
                 <div style={s.header}>

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import './ComboMenu.css'
 
 const s = {
     listItem: {
