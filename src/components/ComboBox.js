@@ -74,7 +74,6 @@ class ComboBox extends Component {
     displayText(){
         if(this.props.value === '')
             return 'Filtrar por ...' ; 
-        console.log(this.props.menu);
         for(let i = 0 ; i < this.props.menu.length ; i ++ ){
             if(this.props.menu[i].id === this.props.value)
                 return this.props.menu[i].name ; 

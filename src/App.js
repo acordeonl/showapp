@@ -147,15 +147,13 @@ class App extends Component {
             this.setState({yearFilter,updated:false}) ;
     }
     handleSubmitSearch(query){
-        if(query !== this.state.query) {
-            if(query.length === 0) { 
-                this.setState({query,
-                    updated:false,yearFilterDisabled:false,genreFilterDisabled:false}) ;
-            }
-            else {
-                this.setState({query,
-                    updated:false,genreFilterDisabled:true,yearFilterDisabled:false}) ;
-            }
+        if(query.length === 0) { 
+            this.setState({query,
+                updated:false,yearFilterDisabled:false,genreFilterDisabled:false}) ;
+        }
+        else {
+            this.setState({query,
+                updated:false,genreFilterDisabled:true,yearFilterDisabled:false}) ;
         }
     }
     handleTabSelect(tab){
@@ -183,11 +181,21 @@ class App extends Component {
             updated:true,
         })
     }
+    handleSearchInputChange(query) {
+        if(query.length === 0) { 
+            this.setState({query,
+                yearFilterDisabled:false,genreFilterDisabled:false}) ;
+        }
+        else {
+            this.setState({query,
+                genreFilterDisabled:true,yearFilterDisabled:false}) ;
+        }
+    }
     render() {
         return (<div style={s.body}>
             <div style={s.app_wrapper}>
                 <AppBar onChange={this.handleTabSelect.bind(this)}/>
-                <ShowAppSearch value={this.state.query} onSubmit={this.handleSubmitSearch.bind(this)}/>
+                <ShowAppSearch onUpdateSearchInput={this.handleSearchInputChange.bind(this)} value={this.state.query} onSubmit={this.handleSubmitSearch.bind(this)}/>
                 <div style={s.header}>
                     <div style={s.headerContent}>
                         Descubra nuevas películas y programas de televisión

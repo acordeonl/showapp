@@ -32,15 +32,12 @@ const s = {
 class ShowAppSearch extends Component {
     constructor(props) {
         super(props) ; 
-        this.state = {
-            value:''
-        }
     }
     submit() {  
-        this.props.onSubmit(this.state.value) ;
+        this.props.onSubmit(this.props.value) ;
     }
     handleInputChange(event) {
-        this.setState({value:event.target.value}) ;
+        this.props.onUpdateSearchInput(event.target.value) ;
     }
     handleKeyDown(event){
         if(event.keyCode === 13)
@@ -49,7 +46,7 @@ class ShowAppSearch extends Component {
     render() {
         return ( <div style={s.wrapper}>
             <img onClick={this.submit.bind(this)} style={s.icon} height='17.5px' width='17.5px' src='img/search.svg' />
-            <input onKeyDown={this.handleKeyDown.bind(this)} onChange={this.handleInputChange.bind(this)} className='show_app_search_bar' style={s.input} type='text' placeholder='Search for a movie, series and videos'/>
+            <input value={this.props.value} onChange={(event) => this.handleInputChange(event)} className='show_app_search_bar' style={s.input} type='text' placeholder='Search for a movie, series and videos'/>
             <div style={s.text}>  </div>
         </div>);
     }
