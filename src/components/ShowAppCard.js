@@ -16,15 +16,15 @@ const s = {
         marginTop:'13px',
         marginLeft:'25px',
         height:'174px',
-        width:'287px'
+        width:'285px'
     },
     header:{
         display:'flex',
         flexDirection:'row',
         justifyContent:'space-between',
         height:'19px',
-        width:'287px',
-        width: '287px',
+        width:'285px',
+        width: '285px',
         height: '19px',
         fontFamily: 'Open Sans',
         fontSize: '14px',
@@ -53,7 +53,7 @@ const s = {
         marginTop:'25px',
         display:'flex',
         flexDirection:'row',
-        width:'287px',
+        width:'285px',
         alignItems:'center',
         justifyContent:'space-between'
     },
@@ -118,7 +118,7 @@ class ShowAppCard extends Component {
                 <div style={s.info}>
                     <div style={s.header}>
                         <div style={s.title}>
-                            {this.limitText(this.props.title,35)}
+                            {this.limitText(this.props.title,32)}
                         </div>
                         <div style={s.score}>
                             {this.props.vote_average}    
