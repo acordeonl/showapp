@@ -35,6 +35,18 @@
     color:#00b6f3; 
 }
 
+/* App card */
+
+.app_card_trailer_button:hover{
+    background-color: #f1fafd; 
+    ;
+}
+
+.app_card_favorites_button:hover{
+    background-color: #f1f1f1 ;
+    /* color:#87969c ; */
+}
+
 /* ShowAppSearch */
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */

@@ -18,6 +18,9 @@ const s = {
         height:'174px',
         width:'285px'
     },
+    image:{
+        userSelect:'none'
+    },
     header:{
         display:'flex',
         flexDirection:'row',
@@ -77,10 +80,13 @@ const s = {
         color: '#87969c',
         display:'flex', 
         flexDirection:'row',
-        userSelect:'none'
+        userSelect:'none',
+        cursor:'pointer',
+        padding:'8px',
+        marginTop:'-1px',
+        borderRadius:'5px'
     },
     icon:{
-        cursor:'pointer',
         marginLeft:'2px',
         userSelect:'none',
     }
@@ -144,15 +150,15 @@ class ShowAppCard extends Component {
                         {this.limitText(this.props.overview,130)}
                     </div>
                     <div style={s.buttons}>
-                        <div style={s.watchTrailerButton} onClick={this.openTrailer.bind(this)}>
+                        <div className='app_card_trailer_button' style={s.watchTrailerButton} onClick={this.openTrailer.bind(this)}>
                             <div >
                                 Ver Trailer
                             </div>
                         </div>
-                        <div style={this.style_addToFavorites()}>
+                        <div className='app_card_favorites_button' onClick={this.addToFavorites.bind(this)} style={this.style_addToFavorites()}>
                             Agregar a favoritos
                             &nbsp;
-                            <img onClick={this.addToFavorites.bind(this)}  style={s.icon} height='17.5px' width='17.5px' src='/img/favorite.svg' />
+                            <img  style={s.icon} height='17.5px' width='17.5px' src='/img/favorite.svg' />
                         </div>
                         
                     </div>
