@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { ShowAppCard } from "./ShowAppCard";
 import { AppVideoModal } from "./AppVideoModal";
+import { AppToast } from "./AppToast";
 
 const s = {
     wrapper:{
@@ -39,12 +40,13 @@ class ShowAppList extends Component {
             loadingMore:true,
             modalOpen:false,
             modalWidth:'800',
-            modalHeight:'500'
+            modalHeight:'500',
+            toastMessage:'',
+            addingToFavorites:false
         }
         document.addEventListener('scroll', this.trackScrolling);
         window.addEventListener('resize', this.windowResize);
     }
-
     windowResize = (evt) => {
         // console.log(evt);
     }
@@ -54,7 +56,6 @@ class ShowAppList extends Component {
                 this.setState({loadingMore:true}) ;
         }
     };
-
     getDurationFormat(time) {
         let hours = Math.floor(time/60) ;
         let minutes = time-hours*60 ; 
@@ -165,23 +166,34 @@ class ShowAppList extends Component {
         document.body.style.overflowY = 'hidden' ; 
         this.setState({modalOpen:true,videoSrc}) ;
     }
+    async doToast(toastMessage){
+        var sleep = n => new Promise(resolve => setTimeout(resolve, n));
+        this.setState({addingToFavorites:true,toastMessage}) ;
+        this.currentMessage = toastMessage ;
+        await sleep(4000);
+        if(this.currentMessage === toastMessage)
+            this.setState({addingToFavorites:false}) ; 
+    }
     render() {
         if(this.props.updated) {
             const data = this.movies.map((movie,index) => {
                 return (
                     <div key={index} style={s.card}>
-                        <ShowAppCard onViewTrailer={this.onViewTrailer.bind(this)} onPlayTrailer={this.playTrailer.bind(this)} {...movie} />
+                        <ShowAppCard onToast={this.doToast.bind(this)} onViewTrailer={this.onViewTrailer.bind(this)} onPlayTrailer={this.playTrailer.bind(this)} {...movie} />
                     </div>
                 ) ;
             });
             if(!this.state.loadingMore || this.props.tab === 'Favorites'){
                 if(data.length === 0) {
                     return (<div style={s.updated}>
-                            Sorry no movies were found related to these criterias.
+                        Sorry no movies were found related to these criterias.
                     </div>) ;
                 }
                 else {
                     return ( <div style={s.wrapper}>
+                        <div style={{display:this.state.addingToFavorites?'block':'none'}}>
+                            <AppToast message={this.state.toastMessage}/>
+                        </div>
                         <div style={{display:this.state.modalOpen?'block':'none'}}>
                             <AppVideoModal 
                                 onClose={this.handleCloseModal.bind(this)}

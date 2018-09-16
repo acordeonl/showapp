@@ -82,7 +82,7 @@ const s = {
     icon:{
         cursor:'pointer',
         marginLeft:'2px',
-        userSelect:'none'
+        userSelect:'none',
     }
 }
 
@@ -97,11 +97,14 @@ class ShowAppCard extends Component {
     addToFavorites() {
         let favorites = JSON.parse(localStorage.getItem('favorites')) ; 
         for(let i = 0 ; i < favorites.length ; i ++ ){
-            if(favorites[i].title === this.props.title)
+            if(favorites[i].title === this.props.title) { 
+                this.props.onToast('Already in Favorites') ;
                 return ; 
+            }
         }
         favorites.push({...this.props,type:'favorite'}) ; 
         localStorage.setItem('favorites',JSON.stringify(favorites)) ; 
+        this.props.onToast('Added '+this.props.title+' to Favorites') ; 
     }
     style_addToFavorites(){
         if(this.props.type === 'favorite')
