@@ -11,7 +11,8 @@ const s = {
         color: '#8aa0a9',
         userSelect:'none', 
         cursor:'pointer',
-        marginLeft:'30px'
+        marginLeft:'15px',
+        marginRight:'15px'
     },
     wrapper:{
         display:'flex',

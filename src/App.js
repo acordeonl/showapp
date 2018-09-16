@@ -15,7 +15,7 @@ const s = {
         justifyContent:'center'
     },
     app_wrapper:{
-        width:'1024px'
+        width:'100%'
     },
     filters:{
         display:'flex',
