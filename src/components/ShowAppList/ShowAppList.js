@@ -36,8 +36,12 @@ class ShowAppList extends Component {
             loadingMore:false
         }
         document.addEventListener('scroll', this.trackScrolling);
+        window.addEventListener('resize', this.windowResize);
     }
 
+    windowResize = (evt) => {
+        console.log(evt);
+    }
     trackScrolling = (evt) => {
         if( (window.innerHeight + window.scrollY) >= document.body.offsetHeight-400 && !this.state.loadingMore)  {
             if(!this.loadedAll)
