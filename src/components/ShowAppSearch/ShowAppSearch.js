@@ -7,6 +7,7 @@ const s = {
         width:'100%',
         backgroundColor:'#f3f6f7',
         display:'flex',
+        borderRadius:'4px',
         alignItems:'center'
     },
     icon:{
@@ -46,7 +47,7 @@ class ShowAppSearch extends Component {
     render() {
         return ( <div style={s.wrapper}>
             <img onClick={this.submit.bind(this)} style={s.icon} height='17.5px' width='17.5px' src='img/search.svg' />
-            <input value={this.props.value} onChange={(event) => this.handleInputChange(event)} className='show_app_search_bar' style={s.input} type='text' placeholder='Search for a movie, series and videos'/>
+            <input value={this.props.value} onChange={this.handleInputChange.bind(this)} onKeyDown={this.handleKeyDown.bind(this)} className='show_app_search_bar' style={s.input} type='text' placeholder='Search for a movie, series and videos'/>
             <div style={s.text}>  </div>
         </div>);
     }

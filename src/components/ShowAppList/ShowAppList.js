@@ -17,7 +17,7 @@ const s = {
         width:'100%',
         fontFamily: 'Open Sans',
         fontSize: '20px',
-        marginTop:'80px',
+        marginTop:'90px',
         color:'#595f61',
         opacity:'0.6',
         display:'flex',
@@ -160,9 +160,16 @@ class ShowAppList extends Component {
                 ) ;
             });
             if(!this.state.loadingMore || this.props.tab === 'Favorites'){
-                return ( <div style={s.wrapper}>
-                    {data}
-                </div>);
+                if(data.length === 0) {
+                    return (<div style={s.updated}>
+                            Sorry no movies were found related to these criterias.
+                    </div>) ;
+                }
+                else {
+                    return ( <div style={s.wrapper}>
+                        {data}
+                    </div>);
+                }
             }
             else{
                 this.page ++  ; 
