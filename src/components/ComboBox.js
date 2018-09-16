@@ -72,9 +72,13 @@ class ComboBox extends Component {
         this.setState({open:!this.state.open}) ; 
     }
     displayText(){
-        if(this.state.value === '')
-            return 'Filtrar por ...'
-        return this.state.value ;
+        if(this.props.value === '')
+            return 'Filtrar por ...' ; 
+        console.log(this.props.menu);
+        for(let i = 0 ; i < this.props.menu.length ; i ++ ){
+            if(this.props.menu[i].id === this.props.value)
+                return this.props.menu[i].name ; 
+        }
     }
     resetValue(value){
         this.setState({value,open:false}) ; 
@@ -87,7 +91,7 @@ class ComboBox extends Component {
             this.setState({open:false}) ; 
     }
     handleSelect (id,name) {
-        this.setState({value:name,id,open:false}) ; 
+        this.setState({value:id,id,open:false}) ; 
         this.props.onChange(id); 
     }
 // --------------- styles ----------------------

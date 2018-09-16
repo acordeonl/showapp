@@ -143,7 +143,8 @@ class App extends Component {
             this.setState({genreFilter,updated:false}) ;
     }
     handleYearFilter(yearFilter){
-        this.setState({yearFilter,updated:false}) ;
+        if(yearFilter !== this.state.yearFilter)
+            this.setState({yearFilter,updated:false}) ;
     }
     handleSubmitSearch(query){
         if(query !== this.state.query) {
@@ -167,7 +168,7 @@ class App extends Component {
                 query:'',
                 updated:false}) ;
         }
-        else {
+        else if (tab !== this.state.tab) {
             this.setState({tab,
                 yearFilterDisabled:true,
                 genreFilterDisabled:true,
@@ -195,11 +196,13 @@ class App extends Component {
                 <div style={s.filters}>
                     <div style={{marginLeft:'42px'}}>
                         <ComboBox disabled={this.state.yearFilterDisabled} title='Year' width='120' height='30' 
+                        value={this.state.yearFilter}
                         onChange={this.handleYearFilter.bind(this)} 
                         menu={this.years} />
                     </div>
                     <div style={{marginLeft:'69px'}}>
                         <ComboBox disabled={this.state.genreFilterDisabled}  style={{marginLeft:'14px'}} title='Genre' width='238' height='30' 
+                            value={this.state.genreFilter}
                             onChange={this.handleGenreFilter.bind(this)} 
                             menu={this.genres} />
                     </div>
