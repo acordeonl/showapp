@@ -51,7 +51,8 @@ class App extends Component {
             yearFilter:'',
             query:'',
             updated:false,
-            yearFilterDisabled:false
+            yearFilterDisabled:false,
+            genreFilterDisabled:false
         }
         this.genres = [{
             "id": 28,
@@ -142,20 +143,39 @@ class App extends Component {
             this.setState({genreFilter,updated:false}) ;
     }
     handleYearFilter(yearFilter){
-        if(yearFilter !== this.state.yearFilter)
-            this.setState({yearFilter,updated:false}) ;
+        this.setState({yearFilter,updated:false}) ;
     }
     handleSubmitSearch(query){
-        if(query !== this.state.query)
-            this.setState({query,updated:false}) ;
+        if(query !== this.state.query) {
+            if(query.length === 0) { 
+                this.setState({query,
+                    updated:false,yearFilterDisabled:false,genreFilterDisabled:false}) ;
+            }
+            else {
+                this.setState({query,
+                    updated:false,genreFilterDisabled:true,yearFilterDisabled:false}) ;
+            }
+        }
     }
     handleTabSelect(tab){
-        if(tab !== this.state.tab)
+        if(tab !== this.state.tab && tab !== 'Favorites') { 
             this.setState({tab,
+                yearFilterDisabled:false,
+                genreFilterDisabled:false,
                 genreFilter:'',
                 yearFilter:'',
                 query:'',
                 updated:false}) ;
+        }
+        else {
+            this.setState({tab,
+                yearFilterDisabled:true,
+                genreFilterDisabled:true,
+                genreFilter:'',
+                yearFilter:'',
+                query:'',
+                updated:false}) ;
+        }
     }
     handleUpdate(){
         this.setState({
@@ -179,7 +199,7 @@ class App extends Component {
                         menu={this.years} />
                     </div>
                     <div style={{marginLeft:'69px'}}>
-                        <ComboBox style={{marginLeft:'14px'}} title='Genre' width='238' height='30' 
+                        <ComboBox disabled={this.state.genreFilterDisabled}  style={{marginLeft:'14px'}} title='Genre' width='238' height='30' 
                             onChange={this.handleGenreFilter.bind(this)} 
                             menu={this.genres} />
                     </div>

@@ -125,8 +125,10 @@ class ShowAppList extends Component {
             queryParams += `&query=${query}` ; 
             queryParams = encodeURI(queryParams);
         }
-        if(yearFilter !== '')
+        if(yearFilter !== '' && this.entity === 'movie')
             queryParams += `&year=${yearFilter}` ; 
+        if(yearFilter !== '' && this.entity === 'tv')
+            queryParams += `&first_air_date_year=${yearFilter}` ; 
         if(endpoint === 'discover' && genreFilter !== '')
             queryParams += `&with_genres=${genreFilter}` ; 
         let api_response = (await(await fetch(
