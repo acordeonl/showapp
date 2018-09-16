@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { ShowAppCard } from "./ShowAppCard";
+import { AppVideoModal } from "./AppVideoModal";
 
 const s = {
     wrapper:{
@@ -34,7 +35,8 @@ class ShowAppList extends Component {
         this.entity = 'movie' ;
         this.loadedAll = false ; 
         this.state = {
-            loadingMore:false
+            loadingMore:true,
+            modalOpen:true 
         }
         document.addEventListener('scroll', this.trackScrolling);
         window.addEventListener('resize', this.windowResize);
@@ -81,7 +83,7 @@ class ShowAppList extends Component {
         ] ) ; 
         let videoUrl = '' ; 
         if(response[1].results && response[1].results[0])
-            videoUrl = 'https://youtube.com/watch?v='+response[1].results[0].key ; 
+            videoUrl = 'https://www.youtube.com/embed/'+response[1].results[0].key ; 
         if(this.entity === 'movie') {
             let {vote_average,runtime,genres,title,id,release_date,overview,poster_path,production_countries} = response[0] ; 
             genres = this.getGenres(genres) ; 
@@ -149,12 +151,18 @@ class ShowAppList extends Component {
             this.setState({loadingMore:false}) ;
 
     }
+    playTrailer(url) {
+        
+    }
+    handleCloseModal() {
+        this.setState({modalOpen:false}) ;
+    }
     render() {
         if(this.props.updated) {
             const data = this.movies.map((movie,index) => {
                 return (
                     <div key={index} style={s.card}>
-                        <ShowAppCard {...movie} />
+                        <ShowAppCard onPlayTrailer={this.playTrailer.bind(this)} {...movie} />
                     </div>
                 ) ;
             });
@@ -166,6 +174,13 @@ class ShowAppList extends Component {
                 }
                 else {
                     return ( <div style={s.wrapper}>
+                        <div style={{display:this.state.modalOpen?'block':'none'}}>
+                            <AppVideoModal 
+                                onClose={this.handleCloseModal.bind(this)}
+                                width='500' 
+                                height='300' 
+                                src='https://www.youtube.com/embed/VQ1nRvsjc_A'/>
+                        </div>
                         {data}
                     </div>);
                 }

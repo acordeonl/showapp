@@ -4,7 +4,6 @@ import { AppBar } from "./components/AppBar";
 import ComboBox from './components/ComboBox' ; 
 import { ShowAppSearch } from "./components/ShowAppSearch";
 import { ShowAppList } from "./components/ShowAppList";
-import { AppModal } from "./components/AppModal";
 import './App.css' ;
 
 const s = {
@@ -41,7 +40,7 @@ const s = {
         flexDirection:'collumn',
         marginTop:'20px',
         marginBottom:'86px'
-    }
+    },
 }
 
 class App extends Component {
@@ -194,38 +193,39 @@ class App extends Component {
         }
     }
     render() {
-        return (<div style={s.body}>
-            <div style={s.app_wrapper}>
-                <AppModal />
-                <AppBar onChange={this.handleTabSelect.bind(this)}/>
-                <ShowAppSearch onUpdateSearchInput={this.handleSearchInputChange.bind(this)} value={this.state.query} onSubmit={this.handleSubmitSearch.bind(this)}/>
-                <div style={s.header}>
-                    <div style={s.headerContent}>
-                        Descubra nuevas películas y programas de televisión
+        return (<div >
+            <div style={s.body}>
+                <div style={s.app_wrapper}>
+                    <AppBar onChange={this.handleTabSelect.bind(this)}/>
+                    <ShowAppSearch onUpdateSearchInput={this.handleSearchInputChange.bind(this)} value={this.state.query} onSubmit={this.handleSubmitSearch.bind(this)}/>
+                    <div style={s.header}>
+                        <div style={s.headerContent}>
+                            Descubra nuevas películas y programas de televisión
+                        </div>
                     </div>
-                </div>
-                <div style={s.filters}>
-                    <div style={{marginLeft:'42px'}}>
-                        <ComboBox disabled={this.state.yearFilterDisabled} title='Year' width='120' height='30' 
-                        value={this.state.yearFilter}
-                        onChange={this.handleYearFilter.bind(this)} 
-                        menu={this.years} />
+                    <div style={s.filters}>
+                        <div style={{marginLeft:'42px'}}>
+                            <ComboBox disabled={this.state.yearFilterDisabled} title='Year' width='120' height='30' 
+                            value={this.state.yearFilter}
+                            onChange={this.handleYearFilter.bind(this)} 
+                            menu={this.years} />
+                        </div>
+                        <div style={{marginLeft:'69px'}}>
+                            <ComboBox disabled={this.state.genreFilterDisabled}  style={{marginLeft:'14px'}} title='Genre' width='238' height='30' 
+                                value={this.state.genreFilter}
+                                onChange={this.handleGenreFilter.bind(this)} 
+                                menu={this.genres} />
+                        </div>
                     </div>
-                    <div style={{marginLeft:'69px'}}>
-                        <ComboBox disabled={this.state.genreFilterDisabled}  style={{marginLeft:'14px'}} title='Genre' width='238' height='30' 
-                            value={this.state.genreFilter}
-                            onChange={this.handleGenreFilter.bind(this)} 
-                            menu={this.genres} />
+                    <div style={s.listWrapper}>
+                        <ShowAppList 
+                            onUpdate={this.handleUpdate.bind(this)}
+                            updated={this.state.updated}
+                            tab={this.state.tab}
+                            genreFilter={this.state.genreFilter}
+                            yearFilter={this.state.yearFilter}
+                            query={this.state.query}/>
                     </div>
-                </div>
-                <div style={s.listWrapper}>
-                    <ShowAppList 
-                        onUpdate={this.handleUpdate.bind(this)}
-                        updated={this.state.updated}
-                        tab={this.state.tab}
-                        genreFilter={this.state.genreFilter}
-                        yearFilter={this.state.yearFilter}
-                        query={this.state.query}/>
                 </div>
             </div>
         </div>);
