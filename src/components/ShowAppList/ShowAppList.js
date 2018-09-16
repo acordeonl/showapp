@@ -14,12 +14,14 @@ const s = {
         marginTop:'10px'
     },
     updated:{
+        width:'100%',
         fontFamily: 'Open Sans',
         fontSize: '20px',
         marginTop:'80px',
         color:'#595f61',
         opacity:'0.6',
         display:'flex',
+        justifyContent:'center',
         alignItems:'center'
     }
 }
@@ -46,7 +48,7 @@ class ShowAppList extends Component {
     async fetchData(tab,query,genreFilter,yearFilter){
         console.log('fetching data');
         var sleep = n => new Promise(resolve => setTimeout(resolve, n));
-        await sleep(20000);
+        await sleep(4000);
         let response = [
             { 
                 title:"DC's Legends of Tomorrow.",
@@ -194,6 +196,7 @@ class ShowAppList extends Component {
             this.loadingMore = false; 
             this.loadedAll = false ; 
             this.page = 0  ; 
+            this.movies = [] ; 
             this.fetchData(this.props.tab,this.props.query,this.props.genreFilter,this.props.yearFilter) ; 
             return (<div style={s.updated}>
                 Loading ... 
