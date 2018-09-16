@@ -37,7 +37,9 @@ class ShowAppList extends Component {
         this.state = {
             videoSrc:'',
             loadingMore:true,
-            modalOpen:false 
+            modalOpen:false,
+            modalWidth:'800',
+            modalHeight:'500'
         }
         document.addEventListener('scroll', this.trackScrolling);
         window.addEventListener('resize', this.windowResize);
@@ -181,8 +183,8 @@ class ShowAppList extends Component {
                         <div style={{display:this.state.modalOpen?'block':'none'}}>
                             <AppVideoModal 
                                 onClose={this.handleCloseModal.bind(this)}
-                                width='500' 
-                                height='300' 
+                                width={this.state.modalWidth}
+                                height={this.state.modalHeight}
                                 src={this.state.videoSrc}/>
                         </div>
                         {data}

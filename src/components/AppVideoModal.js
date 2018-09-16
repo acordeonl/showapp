@@ -34,14 +34,11 @@ const s = {
     },
     icon: {
         cursor:'pointer',
-        height: '20px',
-        width: '20px',
-        backgroundColor: 'blue',
-        float: 'right'
+        float: 'right',
+        marginTop:'-32px',
+        marginLeft:'-14px'
     }
 }
-
-var keys = {37: 1, 38: 1, 39: 1, 40: 1};
 
 class AppVideoModal extends Component {
     close() {
@@ -52,9 +49,8 @@ class AppVideoModal extends Component {
             <div style={s.backdrop} >
             </div>
             <div style={s.videoWrapper} onClick={this.close.bind(this)}>
-                <div style={s.video}>
-                    <div style={s.icon} onClick={this.close.bind(this)}>
-                    </div>
+                <div style={{width:this.props.width,height:this.props.height}}>
+                    <img style={s.icon} onClick={this.close.bind(this)} height='14px' width='14px' src='/img/close-white.svg' />
                      <iframe 
                         width={this.props.width}
                         height={this.props.height} 
