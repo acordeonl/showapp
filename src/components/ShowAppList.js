@@ -5,14 +5,14 @@ import { AppToast } from "./AppToast";
 
 const s = {
     wrapper:{
-        width:'960px'
+        textAlign:'center'
     },
     card:{
         display:'inline-block',
         marginLeft:'10px',
         marginRight:'10px',
         marginBottom:'10px',
-        marginTop:'10px'
+        marginTop:'10px',
     },
     updated:{
         width:'100%',
@@ -44,21 +44,7 @@ class ShowAppList extends Component {
             toastMessage:'',
             addingToFavorites:false
         }
-
-        // const mediumBp = matchMedia('(min-width:600px)') ; 
-        // const changeSize = mql => {
-        //     mql.matches ? 
-        //         document.body.style.background = 'red' :
-        //           document.body.style.background = 'yellow' ;
-        // }
-        // mediumBp.addListener(changeSize) ; 
-        // changeSize(mediumBp) ; 
-
         document.addEventListener('scroll', this.trackScrolling);
-        window.addEventListener('resize', this.windowResize);
-    }
-    windowResize = (evt) => {
-        // console.log(evt);
     }
     trackScrolling = (evt) => {
         if( (window.innerHeight + window.scrollY) >= document.body.offsetHeight-400 && !this.state.loadingMore)  {
@@ -165,9 +151,6 @@ class ShowAppList extends Component {
             this.setState({loadingMore:false}) ;
 
     }
-    playTrailer(url) {
-        
-    }
     handleCloseModal() {
         this.setState({modalOpen:false,videoSrc:''}) ;
         document.body.style.overflowY = 'visible' ; 
@@ -189,7 +172,7 @@ class ShowAppList extends Component {
             const data = this.movies.map((movie,index) => {
                 return (
                     <div key={index} style={s.card}>
-                        <ShowAppCard onToast={this.doToast.bind(this)} onViewTrailer={this.onViewTrailer.bind(this)} onPlayTrailer={this.playTrailer.bind(this)} {...movie} />
+                        <ShowAppCard onToast={this.doToast.bind(this)} onViewTrailer={this.onViewTrailer.bind(this)}  {...movie} />
                     </div>
                 ) ;
             });
