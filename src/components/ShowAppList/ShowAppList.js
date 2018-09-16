@@ -32,6 +32,7 @@ class ShowAppList extends Component {
         this.apiKey ='192895fc9eaa6b3efa11a86deae08542'
         this.page = 1 ;
         this.movies = [] ;
+        this.entity = 'movie' ;
         this.loadedAll = false ; 
         this.state = {
             loadingMore:false
@@ -55,41 +56,67 @@ class ShowAppList extends Component {
         let minutes = time-hours*60 ; 
         return `${hours}h ${minutes}min` ;  
     }
-    getReleaseCountry(release_date,production_countries) { 
+    getReleaseCountry(production_countries) { 
         let country = '' ; 
-        if(production_countries[0])
+        if(production_countries && production_countries[0])
             country = production_countries[0].iso_3166_1;
         return country ; 
-        // return release_date+production_countries[0].iso_3166_1  ;
+    }
+    getGenres(genres){
+        if(genres.length > 1)
+            genres = genres.slice(0,2).map( el => el.name).toString().replace(',',', ');
+        else 
+            genres = genres.map( el => el.name).toString() ;
+        return genres ; 
     }
     async getResponseDetails(elemId) {
         let response = await Promise.all([
             await(await fetch(
-                `https://api.themoviedb.org/3/movie/${elemId}?api_key=${this.apiKey}`
+                `https://api.themoviedb.org/3/${this.entity}/${elemId}?api_key=${this.apiKey}`
             )).json(),
             await(await fetch(
-                `https://api.themoviedb.org/3/movie/${elemId}/videos?api_key=${this.apiKey}`
+                `https://api.themoviedb.org/3/${this.entity}/${elemId}/videos?api_key=${this.apiKey}`
             )).json()
         ] ) ; 
         let videoUrl = '' ; 
         if(response[1].results && response[1].results[0])
             videoUrl = 'https://youtube.com/watch?v='+response[1].results[0].key ; 
-        let {vote_average,runtime,genres,title,id,release_date,overview,poster_path,production_countries} = response[0] ; 
-        genres = genres.slice(0,2).map( el => el.name).toString().replace(',',', ');
-        runtime = this.getDurationFormat(runtime) ; 
-        let releaseCountry = this.getReleaseCountry(release_date,production_countries) ; 
-        let release = release_date ; 
-        if(releaseCountry.length > 0)
-            release = `${release_date} (${releaseCountry})`  ; 
-        let poster_url = 'https://image.tmdb.org/t/p/w500'+poster_path;
-        return {vote_average,runtime,genres,title,id,overview,poster_url,release,videoUrl} ; 
+        if(this.entity === 'movie') {
+            let {vote_average,runtime,genres,title,id,release_date,overview,poster_path,production_countries} = response[0] ; 
+            genres = this.getGenres(genres) ; 
+            runtime = this.getDurationFormat(runtime) ; 
+            let releaseCountry = this.getReleaseCountry(production_countries) ; 
+            let release = release_date ; 
+            if(releaseCountry.length > 0)
+                release = `${release_date} (${releaseCountry})`  ; 
+            let poster_url = 'https://image.tmdb.org/t/p/w500'+poster_path;
+            return {vote_average,runtime,genres,title,id,overview,poster_url,release,videoUrl} ; 
+        }
+        else{
+            let {vote_average,episode_run_time,genres,name,id,first_air_date,overview,poster_path,origin_country} = response[0] ; 
+            genres = this.getGenres(genres) ; 
+            let runtime = (episode_run_time) ? this.getDurationFormat(episode_run_time[0]): this.getDurationFormat(0) ; 
+            let releaseCountry = origin_country[0] ; 
+            let release = first_air_date ; 
+            if(releaseCountry.length > 0)
+                release = `${first_air_date} (${releaseCountry})`  ; 
+            let poster_url = 'https://image.tmdb.org/t/p/w500'+poster_path;
+            return {vote_average,runtime,genres,title:name,id,overview,poster_url,release,videoUrl} ; 
+        }
     }
     async fetchData(tab,query,genreFilter,yearFilter){
         var sleep = n => new Promise(resolve => setTimeout(resolve, n));
-        await sleep(1000);
+        if(tab === 'Favorites'){
+            let favorites = JSON.parse(localStorage.getItem('favorites')) ; 
+            this.movies = this.movies.concat(favorites) ; 
+            await sleep(100);
+            this.props.onUpdate() ; 
+            return ; 
+        }
+        this.entity = (tab === 'Movies')? 'movie':'tv' ; 
         let queryParams = `sort_by=popularity.desc&api_key=${this.apiKey}&page=${this.page}`
         let api_response = (await(await fetch(
-            `https://api.themoviedb.org/3/discover/movie?${queryParams}`
+            `https://api.themoviedb.org/3/discover/${this.entity}?${queryParams}`
         )).json()).results ; 
         let result = await Promise.all(api_response.map( async (elem) => { return await this.getResponseDetails(elem.id)})) ; 
         if(result.length === 0)
@@ -99,6 +126,7 @@ class ShowAppList extends Component {
             this.props.onUpdate() ; 
         else 
             this.setState({loadingMore:false}) ;
+
     }
     render() {
         if(this.props.updated) {
@@ -109,7 +137,7 @@ class ShowAppList extends Component {
                     </div>
                 ) ;
             });
-            if(!this.state.loadingMore){
+            if(!this.state.loadingMore || this.props.tab === 'Favorites'){
                 return ( <div style={s.wrapper}>
                     {data}
                 </div>);

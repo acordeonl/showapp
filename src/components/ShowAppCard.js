@@ -92,6 +92,15 @@ class ShowAppCard extends Component {
             return text.substr(0,len)+'...'
         return text ; 
     }
+    addToFavorites() {
+        let favorites = JSON.parse(localStorage.getItem('favorites')) ; 
+        for(let i = 0 ; i < favorites.length ; i ++ ){
+            if(favorites[i].title === this.props.title)
+                return ; 
+        }
+        favorites.push({...this.props}) ; 
+        localStorage.setItem('favorites',JSON.stringify(favorites)) ; 
+    }
     render() {
         return ( <div style={s.wrapper}>
             <div style={s.layout}>
@@ -130,7 +139,7 @@ class ShowAppCard extends Component {
                         <div style={s.addToFavorites}>
                             Agregar a favoritos
                             &nbsp;
-                            <img  style={s.icon} height='17.5px' width='17.5px' src='/img/favorite.svg' />
+                            <img onClick={this.addToFavorites.bind(this)}  style={s.icon} height='17.5px' width='17.5px' src='/img/favorite.svg' />
                         </div>
                         
                     </div>

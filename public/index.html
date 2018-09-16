@@ -29,6 +29,8 @@
     <div id="root"></div>
     <script>
         window.ondragstart = function() { return false; } 
+        if(localStorage.getItem('favorites') === null)
+            localStorage.setItem('favorites', JSON.stringify([])) ; 
     </script>
     <!--
       This HTML file is a template.
