@@ -39,8 +39,6 @@ class ShowAppList extends Component {
             videoSrc:'',
             loadingMore:true,
             modalOpen:false,
-            modalWidth:'800',
-            modalHeight:'500',
             toastMessage:'',
             addingToFavorites:false
         }
@@ -190,8 +188,6 @@ class ShowAppList extends Component {
                         <div style={{display:this.state.modalOpen?'block':'none'}}>
                             <AppVideoModal 
                                 onClose={this.handleCloseModal.bind(this)}
-                                width={this.state.modalWidth}
-                                height={this.state.modalHeight}
                                 src={this.state.videoSrc}/>
                         </div>
                         {data}
