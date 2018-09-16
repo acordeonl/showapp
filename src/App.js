@@ -27,8 +27,7 @@ const s = {
     },
     headerContent:{
         marginLeft:'42px',
-        width: '408px',
-        height: '22px',
+        marginRight:'42px',
         fontFamily: 'Open Sans',
         fontSize: '16px',
         fontWeight: '600',
@@ -137,7 +136,19 @@ class App extends Component {
             this.years.push({id:i,name:i}) ; 
     }
     componentWillMount(){
-        
+        let mq_medium = matchMedia('(min-width:520px)') ; 
+        mq_medium.addListener(this.setDevice.bind(this)) ; 
+        this.setDevice(mq_medium) ; 
+    }
+    setDevice(mql) {
+        if(mql.matches){
+            this.setState({inMobile:false}) ;
+            // document.body.style.backgroundColor = 'red' ; 
+        }
+        else{
+            this.setState({inMobile:true}) ;
+            // document.body.style.backgroundColor = 'blue' ; 
+        }
     }
     handleGenreFilter(genreFilter){
         if(genreFilter !== this.state.genreFilter)
@@ -192,6 +203,21 @@ class App extends Component {
                 genreFilterDisabled:true,yearFilterDisabled:false}) ;
         }
     }
+    style_yearFilter(){
+        if(this.state.inMobile)
+            return {marginLeft:'30px'}
+        return {marginLeft:'42px'} ; 
+    }
+    style_genreFilter(){
+        if(this.state.inMobile)
+            return {marginLeft:'30px'}
+        return {marginLeft:'69px'} ; 
+    }
+    style_filters(){
+        if(this.state.inMobile)
+            return {...s.filters,flexDirection:'column'}
+        return {...s.filters} ; 
+    }
     render() {
         return (<div >
             <div style={s.body}>
@@ -203,14 +229,14 @@ class App extends Component {
                             Descubra nuevas películas y programas de televisión
                         </div>
                     </div>
-                    <div style={s.filters}>
-                        <div style={{marginLeft:'42px'}}>
+                    <div style={this.style_filters()}>
+                        <div style={this.style_yearFilter()}>
                             <ComboBox disabled={this.state.yearFilterDisabled} title='Year' width='120' height='30' 
                             value={this.state.yearFilter}
                             onChange={this.handleYearFilter.bind(this)} 
                             menu={this.years} />
                         </div>
-                        <div style={{marginLeft:'69px'}}>
+                        <div style={this.style_genreFilter()}>
                             <ComboBox disabled={this.state.genreFilterDisabled}  style={{marginLeft:'14px'}} title='Genre' width='238' height='30' 
                                 value={this.state.genreFilter}
                                 onChange={this.handleGenreFilter.bind(this)} 

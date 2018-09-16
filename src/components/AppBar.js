@@ -30,10 +30,10 @@ class AppBar extends Component {
     }
     componentDidMount(){
         let mq_medium = matchMedia('(min-width:600px)') ; 
-        mq_medium.addListener(this.changeSize.bind(this)) ; 
-        this.changeSize(mq_medium) ; 
+        mq_medium.addListener(this.setDevice.bind(this)) ; 
+        this.setDevice(mq_medium) ; 
     }
-    changeSize(mql) {
+    setDevice(mql) {
         if(mql.matches)
             this.setState({inMobile:false}) ;
         else
