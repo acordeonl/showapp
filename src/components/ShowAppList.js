@@ -159,8 +159,10 @@ class ShowAppList extends Component {
     }
     handleCloseModal() {
         this.setState({modalOpen:false,videoSrc:''}) ;
+        document.body.style.overflowY = 'visible' ; 
     }
     onViewTrailer(videoSrc){
+        document.body.style.overflowY = 'hidden' ; 
         this.setState({modalOpen:true,videoSrc}) ;
     }
     render() {
