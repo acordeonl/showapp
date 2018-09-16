@@ -54,7 +54,7 @@ const s = {
 class ComboBox extends Component {
     constructor(props) {
         super(props) ; 
-        this.state = {value:'', open:false,disabled:false} ; 
+        this.state = {id:-1,value:'', open:false,disabled:false} ; 
         this.cb_value = {...s.value,width:(this.props.width-30-16)+'px'} ; 
         this.cb_selector = {...s.selector,height:this.props.height-2+'px',width:this.props.width-2+'px'}
         this.cb_wrapper = {...s.wrapper,width:this.props.width+'px'} ; 
@@ -86,9 +86,9 @@ class ComboBox extends Component {
         if ( (!domNode || !domNode.contains(event.target) ) && this.state.open ) 
             this.setState({open:false}) ; 
     }
-    handleSelect (value) {
-        this.setState({value,open:false}) ; 
-        this.props.onChange(value); 
+    handleSelect (id,name) {
+        this.setState({value:name,id,open:false}) ; 
+        this.props.onChange(id); 
     }
 // --------------- styles ----------------------
     style_displayText(){

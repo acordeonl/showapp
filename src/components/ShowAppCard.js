@@ -88,6 +88,8 @@ const s = {
 
 class ShowAppCard extends Component {
     limitText(text,len) {
+        if(!text)
+            return '' ; 
         if(text.length > len)
             return text.substr(0,len)+'...'
         return text ; 

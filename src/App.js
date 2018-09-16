@@ -53,6 +53,89 @@ class App extends Component {
             updated:false,
             yearFilterDisabled:false
         }
+        this.genres = [{
+            "id": 28,
+            "name": "Action"
+        },
+        {
+            "id": 12,
+            "name": "Adventure"
+        },
+        {
+            "id": 16,
+            "name": "Animation"
+        },
+        {
+            "id": 35,
+            "name": "Comedy"
+        },
+        {
+            "id": 80,
+            "name": "Crime"
+        },
+        {
+            "id": 99,
+            "name": "Documentary"
+        },
+        {
+            "id": 18,
+            "name": "Drama"
+        },
+        {
+            "id": 10751,
+            "name": "Family"
+        },
+        {
+            "id": 14,
+            "name": "Fantasy"
+        },
+        {
+            "id": 36,
+            "name": "History"
+        },
+        {
+            "id": 27,
+            "name": "Horror"
+        },
+        {
+            "id": 10402,
+            "name": "Music"
+        },
+        {
+            "id": 9648,
+            "name": "Mystery"
+        },
+        {
+            "id": 10749,
+            "name": "Romance"
+        },
+        {
+            "id": 878,
+            "name": "Science Fiction"
+        },
+        {
+            "id": 10770,
+            "name": "TV Movie"
+        },
+        {
+            "id": 53,
+            "name": "Thriller"
+        },
+        {
+            "id": 10752,
+            "name": "War"
+        },
+        {
+            "id": 37,
+            "name": "Western"
+        }
+        ] 
+        this.years = [] ; 
+        for(let i = 1970 ; i < 2019 ; i ++ )
+            this.years.push({id:i,name:i}) ; 
+    }
+    componentWillMount(){
+        
     }
     handleGenreFilter(genreFilter){
         if(genreFilter !== this.state.genreFilter)
@@ -68,18 +151,22 @@ class App extends Component {
     }
     handleTabSelect(tab){
         if(tab !== this.state.tab)
-            this.setState({tab,updated:false}) ;
+            this.setState({tab,
+                genreFilter:'',
+                yearFilter:'',
+                query:'',
+                updated:false}) ;
     }
     handleUpdate(){
         this.setState({
-            updated:true
+            updated:true,
         })
     }
     render() {
         return (<div style={s.body}>
             <div style={s.app_wrapper}>
                 <AppBar onChange={this.handleTabSelect.bind(this)}/>
-                <ShowAppSearch onSubmit={this.handleSubmitSearch.bind(this)}/>
+                <ShowAppSearch value={this.state.query} onSubmit={this.handleSubmitSearch.bind(this)}/>
                 <div style={s.header}>
                     <div style={s.headerContent}>
                         Descubra nuevas películas y programas de televisión
@@ -89,16 +176,12 @@ class App extends Component {
                     <div style={{marginLeft:'42px'}}>
                         <ComboBox disabled={this.state.yearFilterDisabled} title='Year' width='120' height='30' 
                         onChange={this.handleYearFilter.bind(this)} 
-                        menu={['2016', '2002', '2006']} />
+                        menu={this.years} />
                     </div>
                     <div style={{marginLeft:'69px'}}>
                         <ComboBox style={{marginLeft:'14px'}} title='Genre' width='238' height='30' 
                             onChange={this.handleGenreFilter.bind(this)} 
-                            menu={[
-                                'Acción',
-                                'Aventura', 
-                                'Comedia',
-                            ]} />
+                            menu={this.genres} />
                     </div>
                 </div>
                 <div style={s.listWrapper}>

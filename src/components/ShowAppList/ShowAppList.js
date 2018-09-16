@@ -63,6 +63,8 @@ class ShowAppList extends Component {
         return country ; 
     }
     getGenres(genres){
+        if(!genres)
+            return '' ; 
         if(genres.length > 1)
             genres = genres.slice(0,2).map( el => el.name).toString().replace(',',', ');
         else 
@@ -96,7 +98,9 @@ class ShowAppList extends Component {
             let {vote_average,episode_run_time,genres,name,id,first_air_date,overview,poster_path,origin_country} = response[0] ; 
             genres = this.getGenres(genres) ; 
             let runtime = (episode_run_time) ? this.getDurationFormat(episode_run_time[0]): this.getDurationFormat(0) ; 
-            let releaseCountry = origin_country[0] ; 
+            let releaseCountry = ''; 
+            if(origin_country && origin_country[0])
+                releaseCountry = origin_country[0] ; 
             let release = first_air_date ; 
             if(releaseCountry.length > 0)
                 release = `${first_air_date} (${releaseCountry})`  ; 
@@ -113,15 +117,31 @@ class ShowAppList extends Component {
             this.props.onUpdate() ; 
             return ; 
         }
-        this.entity = (tab === 'Movies')? 'movie':'tv' ; 
-        let queryParams = `sort_by=popularity.desc&api_key=${this.apiKey}&page=${this.page}`
+        this.entity = (tab === 'Movies')? 'movie':'tv' ;
+        let endpoint = 'discover'; 
+        let queryParams = `sort_by=popularity.desc&api_key=${this.apiKey}&page=${this.page}` ; 
+        if(query.length > 0){
+            endpoint = 'search' ; 
+            queryParams += `&query=${query}` ; 
+            queryParams = encodeURI(queryParams);
+        }
+        if(yearFilter !== '')
+            queryParams += `&year=${yearFilter}` ; 
+        if(endpoint === 'discover' && genreFilter !== '')
+            queryParams += `&with_genres=${genreFilter}` ; 
         let api_response = (await(await fetch(
-            `https://api.themoviedb.org/3/discover/${this.entity}?${queryParams}`
-        )).json()).results ; 
-        let result = await Promise.all(api_response.map( async (elem) => { return await this.getResponseDetails(elem.id)})) ; 
-        if(result.length === 0)
+            `https://api.themoviedb.org/3/${endpoint}/${this.entity}?${queryParams}`
+        )).json()) ; 
+        if(api_response && api_response.results) { 
+            api_response = api_response.results ;
+            let result = await Promise.all(api_response.map( async (elem) => { return await this.getResponseDetails(elem.id)})) ; 
+            if(result.length === 0) 
+                this.loadedAll = true ; 
+            this.movies = this.movies.concat(result) ; 
+        }
+        else { 
             this.loadedAll = true ; 
-        this.movies = this.movies.concat(result) ; 
+        }
         if(!this.state.loadingMore)
             this.props.onUpdate() ; 
         else 

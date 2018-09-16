@@ -31,7 +31,7 @@ class ComboMenu extends Component {
         this.menu_wrapper = {...s.wrapper,width:this.props.width+'px'} ;
     }
     handleSelect(value){
-        this.props.onItemSelect(value) ; 
+        this.props.onItemSelect(value.id,value.name) ; 
     }
     style_listItem(listItem){
         if(listItem !== this.props.selected)
@@ -41,12 +41,12 @@ class ComboMenu extends Component {
     render() {
         const menu = this.props.menu.map((listItem,index) => {
             return (
-                <div className='combo_box_menu_listItem' ref={listItem}
-                    key={index} 
+                <div className='combo_box_menu_listItem'
+                    key={listItem.id} 
                     style={s.listItem}
                     onClick={this.handleSelect.bind(this,listItem)}>
-                    <div style={this.style_listItem(listItem)} >
-                        {listItem}
+                    <div style={this.style_listItem(listItem.id)} >
+                        {listItem.name}
                     </div>
                 </div>  
             ) ;
