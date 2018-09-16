@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { AppBar } from "./components/AppBar";
 import ComboBox from './components/ComboBox' ; 
 import { ShowAppSearch } from "./components/ShowAppSearch/ShowAppSearch";
+import { ShowAppList } from "./components/ShowAppList/ShowAppList";
 
 const s = {
     filters:{
@@ -21,6 +22,13 @@ const s = {
         fontSize: '16px',
         fontWeight: '600',
         color: '#687b82',
+    },
+    listWrapper:{
+        display:'flex', 
+        justifyContent:'center',
+        flexDirection:'collumn',
+        marginTop:'30px',
+        marginBottom:'86px'
     }
 }
 
@@ -66,6 +74,9 @@ class App extends Component {
                             'Comedia',
                         ]} />
                 </div>
+            </div>
+            <div style={s.listWrapper}>
+                <ShowAppList />
             </div>
         </div>);
     }
