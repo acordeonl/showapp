@@ -94,27 +94,27 @@ class ShowAppCard extends Component {
                 <div style={s.info}>
                     <div style={s.header}>
                         <div style={s.title}>
-                            DC's Legends of Tomorrow.
+                            {this.props.title}
                         </div>
                         <div style={s.score}>
-                            7.5    
+                            {this.props.score}    
                         </div>
                     </div>
                     <div style={s.details}>
                         <div >
-                            2h 16min
+                            {this.props.duration}
                         </div>
                         &nbsp;|&nbsp;
                         <div >
-                            5 May 2017 (USA)
+                            {this.props.date}
                         </div>
                         &nbsp;|&nbsp;
                         <div >
-                            Acción y Aventura
+                            {this.props.genre}
                         </div>
                     </div>
                     <div style={s.description}>
-                        Cuando los héroes por sí solos no son  suficientes. El mundo necesita leyendas. Después de haber visto el futuro ...
+                        {this.props.description}
                     </div>
                     <div style={s.buttons}>
                         <div style={s.watchTrailerButton}>
@@ -125,7 +125,7 @@ class ShowAppCard extends Component {
                         <div style={s.addToFavorites}>
                             Agregar a favoritos
                             &nbsp;
-                            <img  style={s.icon} height='17.5px' width='17.5px' src='img/favorite.svg' />
+                            <img  style={s.icon} height='17.5px' width='17.5px' src={this.props.imageUrl} />
                         </div>
                         
                     </div>

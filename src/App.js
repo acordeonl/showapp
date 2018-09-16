@@ -27,7 +27,7 @@ const s = {
         display:'flex', 
         justifyContent:'center',
         flexDirection:'collumn',
-        marginTop:'30px',
+        marginTop:'20px',
         marginBottom:'86px'
     }
 }
