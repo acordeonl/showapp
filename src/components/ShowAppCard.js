@@ -49,7 +49,8 @@ const s = {
         fontFamily: 'Open Sans',
         fontSize: '12px',
         color: '#687b82',
-        marginTop:'21px'
+        marginTop:'21px',
+        textAlign:'left'
     },
     buttons:{
         marginTop:'25px',
