@@ -29,7 +29,8 @@ const s = {
 class ShowAppList extends Component {
     constructor(props) {
         super(props) ; 
-        this.page = 0 ;
+        this.apiKey ='192895fc9eaa6b3efa11a86deae08542'
+        this.page = 1 ;
         this.movies = [] ;
         this.loadedAll = false ; 
         this.state = {
@@ -49,123 +50,50 @@ class ShowAppList extends Component {
         }
     };
 
+    getDurationFormat(time) {
+        let hours = Math.floor(time/60) ;
+        let minutes = time-hours*60 ; 
+        return `${hours}h ${minutes}min` ;  
+    }
+    getReleaseCountry(release_date,production_countries) { 
+        let country = '' ; 
+        if(production_countries[0])
+            country = production_countries[0].iso_3166_1;
+        return country ; 
+        // return release_date+production_countries[0].iso_3166_1  ;
+    }
+    async getResponseDetails(elemId) {
+        let response = await Promise.all([
+            await(await fetch(
+                `https://api.themoviedb.org/3/movie/${elemId}?api_key=${this.apiKey}`
+            )).json(),
+            await(await fetch(
+                `https://api.themoviedb.org/3/movie/${elemId}/videos?api_key=${this.apiKey}`
+            )).json()
+        ] ) ; 
+        let videoUrl = '' ; 
+        if(response[1].results && response[1].results[0])
+            videoUrl = 'https://youtube.com/watch?v='+response[1].results[0].key ; 
+        let {vote_average,runtime,genres,title,id,release_date,overview,poster_path,production_countries} = response[0] ; 
+        genres = genres.slice(0,2).map( el => el.name).toString().replace(',',', ');
+        runtime = this.getDurationFormat(runtime) ; 
+        let releaseCountry = this.getReleaseCountry(release_date,production_countries) ; 
+        let release = release_date ; 
+        if(releaseCountry.length > 0)
+            release = `${release_date} (${releaseCountry})`  ; 
+        return {vote_average,runtime,genres,title,id,overview,poster_path,release,videoUrl} ; 
+    }
     async fetchData(tab,query,genreFilter,yearFilter){
-        console.log('fetching data');
         var sleep = n => new Promise(resolve => setTimeout(resolve, n));
-        await sleep(4000);
-        let response = [
-            { 
-                title:"DC's Legends of Tomorrow.",
-                score:7.5,
-                duration:'2h 16min',
-                date:'5 May 2017 (USA)',
-                genre:'Acción y Aventura',
-                description:'Cuando los héroes por sí solos no son  suficientes. El mundo necesita leyendas. Después de haber visto el futuro ...',
-                imageUrl:'img/favorite.svg'
-            },
-            { 
-                title:"Spiderman",
-                score:7.5,
-                duration:'2h 16min',
-                date:'5 May 2017 (USA)',
-                genre:'Acción y Aventura',
-                description:'Cuando los héroes por sí solos no son  suficientes. El mundo necesita leyendas. Después de haber visto el futuro ...',
-                imageUrl:'img/favorite.svg'
-            },
-            { 
-                title:"Batman",
-                score:7.5,
-                duration:'2h 16min',
-                date:'5 May 2017 (USA)',
-                genre:'Acción y Aventura',
-                description:'Cuando los héroes por sí solos no son  suficientes. El mundo necesita leyendas. Después de haber visto el futuro ...',
-                imageUrl:'img/favorite.svg'
-            },
-            { 
-                title:"DC's Legends of Tomorrow.",
-                score:7.5,
-                duration:'2h 16min',
-                date:'5 May 2017 (USA)',
-                genre:'Acción y Aventura',
-                description:'Cuando los héroes por sí solos no son  suficientes. El mundo necesita leyendas. Después de haber visto el futuro ...',
-                imageUrl:'img/favorite.svg'
-            },
-            { 
-                title:"Batman",
-                score:7.5,
-                duration:'2h 16min',
-                date:'5 May 2017 (USA)',
-                genre:'Acción y Aventura',
-                description:'Cuando los héroes por sí solos no son  suficientes. El mundo necesita leyendas. Después de haber visto el futuro ...',
-                imageUrl:'img/favorite.svg'
-            },
-            { 
-                title:"DC's Legends of Tomorrow.",
-                score:7.5,
-                duration:'2h 16min',
-                date:'5 May 2017 (USA)',
-                genre:'Acción y Aventura',
-                description:'Cuando los héroes por sí solos no son  suficientes. El mundo necesita leyendas. Después de haber visto el futuro ...',
-                imageUrl:'img/favorite.svg'
-            },
-            { 
-                title:"Batman",
-                score:7.5,
-                duration:'2h 16min',
-                date:'5 May 2017 (USA)',
-                genre:'Acción y Aventura',
-                description:'Cuando los héroes por sí solos no son  suficientes. El mundo necesita leyendas. Después de haber visto el futuro ...',
-                imageUrl:'img/favorite.svg'
-            },
-            { 
-                title:"DC's Legends of Tomorrow.",
-                score:7.5,
-                duration:'2h 16min',
-                date:'5 May 2017 (USA)',
-                genre:'Acción y Aventura',
-                description:'Cuando los héroes por sí solos no son  suficientes. El mundo necesita leyendas. Después de haber visto el futuro ...',
-                imageUrl:'img/favorite.svg'
-            },
-            { 
-                title:"Batman",
-                score:7.5,
-                duration:'2h 16min',
-                date:'5 May 2017 (USA)',
-                genre:'Acción y Aventura',
-                description:'Cuando los héroes por sí solos no son  suficientes. El mundo necesita leyendas. Después de haber visto el futuro ...',
-                imageUrl:'img/favorite.svg'
-            },
-            { 
-                title:"DC's Legends of Tomorrow.",
-                score:7.5,
-                duration:'2h 16min',
-                date:'5 May 2017 (USA)',
-                genre:'Acción y Aventura',
-                description:'Cuando los héroes por sí solos no son  suficientes. El mundo necesita leyendas. Después de haber visto el futuro ...',
-                imageUrl:'img/favorite.svg'
-            },
-            { 
-                title:"Batman",
-                score:7.5,
-                duration:'2h 16min',
-                date:'5 May 2017 (USA)',
-                genre:'Acción y Aventura',
-                description:'Cuando los héroes por sí solos no son  suficientes. El mundo necesita leyendas. Después de haber visto el futuro ...',
-                imageUrl:'img/favorite.svg'
-            },
-            { 
-                title:"DC's Legends of Tomorrow.",
-                score:7.5,
-                duration:'2h 16min',
-                date:'5 May 2017 (USA)',
-                genre:'Acción y Aventura',
-                description:'Cuando los héroes por sí solos no son  suficientes. El mundo necesita leyendas. Después de haber visto el futuro ...',
-                imageUrl:'img/favorite.svg'
-            }
-        ]  ;
-        if(response.length === 0)
+        await sleep(1000);
+        let queryParams = `sort_by=popularity.desc&api_key=${this.apiKey}&page=${this.page}`
+        let api_response = (await(await fetch(
+            `https://api.themoviedb.org/3/discover/movie?${queryParams}`
+        )).json()).results ; 
+        let result = await Promise.all(api_response.map( async (elem) => { return await this.getResponseDetails(elem.id)})) ; 
+        if(result.length === 0)
             this.loadedAll = true ; 
-        this.movies = this.movies.concat(response) ; 
+        this.movies = this.movies.concat(result) ; 
         if(!this.state.loadingMore)
             this.props.onUpdate() ; 
         else 
@@ -197,9 +125,8 @@ class ShowAppList extends Component {
             }
         }
         else {
-            this.loadingMore = false; 
             this.loadedAll = false ; 
-            this.page = 0  ; 
+            this.page = 1  ; 
             this.movies = [] ; 
             this.fetchData(this.props.tab,this.props.query,this.props.genreFilter,this.props.yearFilter) ; 
             return (<div style={s.updated}>

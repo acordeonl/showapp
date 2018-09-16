@@ -87,6 +87,11 @@ const s = {
 }
 
 class ShowAppCard extends Component {
+    limitText(text,len) {
+        if(text.length > len)
+            return text.substr(0,len)+'...'
+        return text ; 
+    }
     render() {
         return ( <div style={s.wrapper}>
             <div style={s.layout}>
@@ -94,27 +99,27 @@ class ShowAppCard extends Component {
                 <div style={s.info}>
                     <div style={s.header}>
                         <div style={s.title}>
-                            {this.props.title}
+                            {this.limitText(this.props.title,35)}
                         </div>
                         <div style={s.score}>
-                            {this.props.score}    
+                            {this.props.vote_average}    
                         </div>
                     </div>
                     <div style={s.details}>
                         <div >
-                            {this.props.duration}
+                            {this.props.runtime}
                         </div>
                         &nbsp;|&nbsp;
                         <div >
-                            {this.props.date}
+                            {this.props.release}
                         </div>
                         &nbsp;|&nbsp;
                         <div >
-                            {this.props.genre}
+                            {this.limitText(this.props.genres,17)}
                         </div>
                     </div>
                     <div style={s.description}>
-                        {this.props.description}
+                        {this.limitText(this.props.overview,130)}
                     </div>
                     <div style={s.buttons}>
                         <div style={s.watchTrailerButton}>
@@ -125,7 +130,7 @@ class ShowAppCard extends Component {
                         <div style={s.addToFavorites}>
                             Agregar a favoritos
                             &nbsp;
-                            <img  style={s.icon} height='17.5px' width='17.5px' src={this.props.imageUrl} />
+                            <img  style={s.icon} height='17.5px' width='17.5px' src='/img/favorite.svg' />
                         </div>
                         
                     </div>
