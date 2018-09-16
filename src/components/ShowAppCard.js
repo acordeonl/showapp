@@ -206,14 +206,15 @@ class ShowAppCard extends Component {
                                 Ver Trailer
                             </div>
                         </div>
-                        <div style={this.style_addToFavorites()} className='app_card_favorites_button' onClick={this.addToFavorites.bind(this)} style={this.style_addToFavorites()}>
-                            <div style={{display:this.state.inMobile?'none':'block'}}>                            
-                                Agregar a favoritos
-                                &nbsp;
+                        <div style={{display:this.props.type === 'favorite' ?'none':'block'}}>                            
+                            <div style={this.style_addToFavorites()} className='app_card_favorites_button' onClick={this.addToFavorites.bind(this)} style={this.style_addToFavorites()}>
+                                <div style={{display:this.state.inMobile?'none':'block'}}>                            
+                                    Agregar a favoritos
+                                    &nbsp;
+                                </div>
+                                <img  style={s.icon} height='17.5px' width='17.5px' src='/img/favorite.svg' />
                             </div>
-                            <img  style={s.icon} height='17.5px' width='17.5px' src='/img/favorite.svg' />
                         </div>
-                        
                     </div>
                 </div>
             </div>
