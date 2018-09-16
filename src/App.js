@@ -36,23 +36,38 @@ class App extends Component {
     constructor(props) {
         super(props) ; 
         this.state = {
+            tab:'Movies',
             genreFilter:'',
             yearFilter:'',
+            query:'',
+            updated:false,
             yearFilterDisabled:false
         }
     }
-    genreFilter(genreFilter){
-        this.setState({genreFilter}) ;
+    handleGenreFilter(genreFilter){
+        if(genreFilter !== this.state.genreFilter)
+            this.setState({genreFilter,updated:false}) ;
     }
-    yearFilter(yearFilter){
-        this.setState({yearFilter}) ;
+    handleYearFilter(yearFilter){
+        if(yearFilter !== this.state.yearFilter)
+            this.setState({yearFilter,updated:false}) ;
     }
     handleSubmitSearch(query){
-        console.log(query);
+        if(query !== this.state.query)
+            this.setState({query,updated:false}) ;
+    }
+    handleTabSelect(tab){
+        if(tab !== this.state.tab)
+            this.setState({tab,updated:false}) ;
+    }
+    handleUpdate(){
+        this.setState({
+            updated:true
+        })
     }
     render() {
         return (<div>
-            <AppBar/>
+            <AppBar onChange={this.handleTabSelect.bind(this)}/>
             <ShowAppSearch onSubmit={this.handleSubmitSearch.bind(this)}/>
             <div style={s.header}>
                 <div style={s.headerContent}>
@@ -62,12 +77,12 @@ class App extends Component {
             <div style={s.filters}>
                 <div style={{marginLeft:'42px'}}>
                     <ComboBox disabled={this.state.yearFilterDisabled} title='Year' width='120' height='30' 
-                    onChange={this.yearFilter.bind(this)} 
+                    onChange={this.handleYearFilter.bind(this)} 
                     menu={['2016', '2002', '2006']} />
                 </div>
                 <div style={{marginLeft:'69px'}}>
                     <ComboBox style={{marginLeft:'14px'}} title='Genre' width='238' height='30' 
-                        onChange={this.genreFilter.bind(this)} 
+                        onChange={this.handleGenreFilter.bind(this)} 
                         menu={[
                             'Acción',
                             'Aventura', 
@@ -76,7 +91,13 @@ class App extends Component {
                 </div>
             </div>
             <div style={s.listWrapper}>
-                <ShowAppList />
+                <ShowAppList 
+                    onUpdate={this.handleUpdate.bind(this)}
+                    updated={this.state.updated}
+                    tab={this.state.tab}
+                    genreFilter={this.state.genreFilter}
+                    yearFilter={this.state.yearFilter}
+                    query={this.state.query}/>
             </div>
         </div>);
     }

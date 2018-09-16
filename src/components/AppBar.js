@@ -28,7 +28,7 @@ class AppBar extends Component {
         }
     }
     handleTabAction(selectedTab) {
-        this.setState({selectedTab}) ;
+        this.props.onChange(selectedTab) ;
     }
     render() {
         return ( <div style={s.wrapper}>

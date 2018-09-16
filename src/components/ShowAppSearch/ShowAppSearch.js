@@ -17,13 +17,12 @@ const s = {
         cursor:'pointer'
     },
     input:{
-        width: '240px',
+        width: '65%',
         height: '19px',
-        opacity: '0.59',
         fontFamily: 'Open Sans',
         fontSize: '14px',
         marginTop:'2px',
-        color:'#687b82',
+        color:'#595f61',
         background: 'transparent',
         border: 'none',
         outline: 'none'

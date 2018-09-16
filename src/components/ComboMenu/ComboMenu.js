@@ -39,10 +39,10 @@ class ComboMenu extends Component {
         return {...s.content,fontWeight:'800'} ; 
     }
     render() {
-        const menu = this.props.menu.map(listItem => {
+        const menu = this.props.menu.map((listItem,index) => {
             return (
                 <div className='combo_box_menu_listItem' ref={listItem}
-                    key={listItem} 
+                    key={index} 
                     style={s.listItem}
                     onClick={this.handleSelect.bind(this,listItem)}>
                     <div style={this.style_listItem(listItem)} >
